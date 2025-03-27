@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkia_docs=self.webpackChunkia_docs||[]).push([[6709],{1127:e=>{e.exports=JSON.parse('{"metadata":{"permalink":"/notas-sintecto/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

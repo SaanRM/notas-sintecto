@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkia_docs=self.webpackChunkia_docs||[]).push([[4583],{623:(s,e,t)=>{t.r(e),t.d(e,{default:()=>o});t(6289);var a=t(797);t(9303);var c=t(6347),n=t(4848);function o(){const{siteConfig:s}=(0,a.A)();return(0,n.jsx)(c.rd,{to:"/blog"})}}}]);
