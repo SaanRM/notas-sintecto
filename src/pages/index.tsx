@@ -32,5 +32,5 @@ function HomepageHeader() {
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
-  return <Redirect to="/blog" />;
+  return <Redirect to="/notas-sintecto/intro/" />;
 }
