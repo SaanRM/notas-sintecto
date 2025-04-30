@@ -1,14 +1,28 @@
 ---
 title: 🎭 Niveles de personalización de modelos
+sidebar_position: 1
 ---
 
-Existen tres niveles de personalización para la interacción con modelos de IA:
+### Existen tres niveles de personalización principales para la interacción con modelos de IA:
 
-1. **Prompt normal**  
-   - Cada solicitud envía explícitamente el rol, el contexto y la definición de funciones (“tools”) de forma manual. Es flexible y permite controlar cada petición de manera precisa, pero requiere repetir constantemente las instrucciones. Solo se paga el coste base de tokens (entrada y salida), aunque si se utilizan herramientas, el coste de la interacción puede aumentar.
+1. **Flujo de prompts**  
+   - Consiste en enviar en cada llamada el rol, el contexto y las herramientas de forma manual; proporciona control total sobre cada interacción, a costa de repetir las mismas instrucciones en cada petición.
 
-2. **Assistants API**  
-   - Permite definir de forma persistente un conjunto de instrucciones, contexto, herramientas y archivos asociados a un asistente configurado una sola vez mediante dashboard o API. Funciona igual que los prompts normales a nivel técnico, pero facilita el desarrollo al centralizar y automatizar la gestión de contexto y funciones. El coste es el mismo que en prompts normales, con la posibilidad de aumento si se utilizan herramientas adicionales.
+2. **Assistants (Asistentes)**  
 
-3. **Fine-tuning**  
-   - Consiste en reentrenar el modelo con ejemplos personalizados para que adopte de forma permanente un comportamiento específico, sin necesidad de enviar prompts de contexto en cada solicitud. Este método implica un coste inicial por el entrenamiento y, posteriormente, tarifas de uso diferenciadas (input, output, cache) que son más elevadas que las del modelo base.
+   - Permite crear un asistente único que almacena de forma persistente sistema, contexto, herramientas y archivos; simplifica la integración al gestionar internamente el estado y los metadatos necesarios en cada llamada.
+
+3. **Fine-tuning (Ajuste fino)**  
+   - Implica reentrenar el modelo con datos de ejemplo para incorporar comportamientos o estilos específicos de forma permanente, de modo que no sea necesario volver a enviar contexto ni instrucciones adicionales en cada solicitud.
+
+:::info
+
+Se realizó una prueba desde el **[playground de la plataforma de OpenAI](https://platform.openai.com/playground)** con el fin de medir la cantidad total de tokens consumidos (entrada y salida) bajo las mismas condiciones iniciales en las tres categorías. Se inició un chat solicitando asistencia básica y se interrumpió la conversación cuando el uso aproximado alcanzó los 1 000 tokens.
+
+De esta manera podemos comparar de forma directa qué tipo de personalización es más o menos eficiente en el consumo de tokens. En cada pestaña de esta sección se incluye la conversación completa utilizada, y los resultados finales se presentan al final de la misma.
+
+En la página de cada tipo de personalización se incluye una explicación más detallada de cómo funciona cada método, la conversación realizada y un resumen de los datos.
+
+En la página **[✅ Resultados y comparación de la prueba](./Resultados%20y%20comparación.md)** se encuentra un resumen y una conclusión de todos los datos obtenidos.
+
+:::

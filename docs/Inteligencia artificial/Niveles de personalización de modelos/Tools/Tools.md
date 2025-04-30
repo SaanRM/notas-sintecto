@@ -11,12 +11,12 @@ title: 🛠 Tools
   - Llamar APIs externas (`Function Calling`)
 - Las Tools se activan al **configurar un Assistant** desde el **OpenAI Platform Dashboard** (https://platform.openai.com/).
 
----
+
 
 ## 2. Tabla Comparativa: Uso de texto manual vs. File Search
 
 | Aspecto | Pegar texto manualmente en prompt | Usar Tool: File Search |
-|:---|:---|:---|
+|-|-|-|
 | **Costo de subida** | No aplica | Gratis |
 | **Costo por tokens de entrada** | ~$0.003 por 1,000 tokens | ~$0.003 por 1,000 tokens |
 | **Costo adicional** | No | **$0.20 por 1,000 tokens recuperados** |
@@ -24,29 +24,29 @@ title: 🛠 Tools
 | **Complejidad** | Manual (copiar/pegar) | Automático (busca por ti) |
 | **Límite práctico** | Hasta ~100,000 tokens (con GPT-4-turbo-128k) | No hay límite práctico en tamaño (fragmenta y busca) |
 
----
+
 
 ## 3. Ejemplo Real: Costos estimados para un archivo PDF de 50 páginas
 
 | Concepto | Valor |
-|:---|:---|
+|-|-|
 | **Tamaño estimado** | ~25,000 tokens |
 | **Costo pegando texto** | ~$0.075 USD |
 | **Costo usando File Search** | ~$5.075 USD |
 | **Diferencia** | **File Search es ~67 veces más caro** en este escenario |
 
----
+
 
 ## 4. ¿Dónde usar cada opción?
 
 | Escenario | Recomendación |
-|:---|:---|
+|--|--|
 | Documento corto (1–20 páginas) | Pegar directamente en el prompt |
 | Documento medio (20–80 páginas) | Depende: Si entra en el contexto, pegarlo; si no, considerar fragmentarlo |
 | Documento largo (100+ páginas o varios documentos) | Usar File Search |
 | Necesidad de búsquedas inteligentes (no sabes qué parte usar) | Usar File Search |
 
----
+
 
 ## 5. Notas Adicionales
 
@@ -56,7 +56,7 @@ title: 🛠 Tools
   Si haces preguntas muy generales o amplias, más tokens serán recuperados.
 - **File Search funciona mejor si el contenido está bien estructurado.**
 
----
+
 
 # ✅ Resumen Final
 
