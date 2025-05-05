@@ -1,6 +1,6 @@
 ---
-title: 🎭 Niveles de personalización de modelos
-sidebar_position: 1
+title: Niveles de personalización de modelos
+sidebar_position: 2
 ---
 
 ### Existen tres niveles de personalización principales para la interacción con modelos de IA:
