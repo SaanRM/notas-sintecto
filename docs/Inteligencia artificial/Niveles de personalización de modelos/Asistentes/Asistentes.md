@@ -3,10 +3,6 @@ title: 2. Asistentes (Estructurada)
 sidebar_position: 2
 ---
 
-:::note
-**Nota:** El Assistants API será reemplazado por el **Responses API**, que será gratuito para desarrolladores hasta mediados de 2026.
-:::
-
 La API de **Asistentes** permite definir y reutilizar un conjunto persistente de instrucciones, herramientas y archivos, simplificando la integración de modelos en aplicaciones complejas. A diferencia del flujo manual con prompts, aquí se centraliza toda la configuración en un solo objeto llamado “asistente”, el cual se crea una vez y se puede invocar múltiples veces con entradas nuevas (llamadas _threads_).
 
 - El contexto no necesita reenviarse en cada solicitud, ya que el asistente lo conserva internamente.
@@ -20,7 +16,7 @@ Adicionalmente, si se activan herramientas opcionales, pueden aplicarse costes e
 
 | Funcionalidad         | Coste adicional                       |
 |--|--|
-| Retrieval             | \$0.20 / GB / día                     |
+| Retrieval             | \$0.01 / GB / día                     |
 | Code Interpreter      | Tarifa por tiempo de ejecución activa |
 
 ## Ejemplo de ejecución con Assistants API

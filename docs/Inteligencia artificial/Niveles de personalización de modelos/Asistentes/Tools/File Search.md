@@ -2,59 +2,74 @@
 title: File Search (Búsqueda de archivos)
 ---
 
-
 ## ¿Qué es File Search?
 
 File Search es una herramienta que permite cargar documentos (por ejemplo, PDFs, archivos Word, TXT) para que el modelo de OpenAI pueda buscar y recuperar automáticamente fragmentos relevantes en función de una consulta.  
-A diferencia del enfoque manual, en el cual es necesario copiar y pegar el contenido directamente en el prompt, File Search indexa los documentos y realiza búsquedas inteligentes sobre ellos.  
-Esta funcionalidad resulta especialmente útil para gestionar grandes volúmenes de información o múltiples documentos, permitiendo una recuperación de datos más eficiente y precisa.
 
-## Metodología de comparación
+A diferencia del enfoque manual, en el cual es necesario copiar y pegar el contenido directamente en el prompt, File Search indexa los documentos y realiza búsquedas inteligentes sobre ellos, esta funcionalidad resulta especialmente útil para gestionar grandes volúmenes de información o múltiples documentos, permitiendo una recuperación de datos más eficiente y precisa.
 
-La comparación se realiza considerando los siguientes factores:
-- Costos asociados (subida, procesamiento y recuperación de información).
-- Complejidad de uso (manual vs. automatizado).
-- Escenarios ideales de aplicación según el tamaño de los documentos.
-- Estimaciones de costos prácticos utilizando un archivo ejemplo.
-- Recomendaciones de uso basadas en tipo y tamaño de documentos.
+## Comparación entre usar File search o ingresar manualmente el texto del archivo
 
-## 2. Tabla Comparativa: Texto manual vs. File Search
+Se creó un archivo PDF con un contenido de aproximadamente 100 Tokens con el propósito de comparar el uso de tokens al usar **File Search** con el de **ingresar manualmente el texto** del archivo.
 
-| Aspecto | Copiar/pegar texto en el prompt | Utilizar File Search |
-|:---|:---|:---|
-| **Costo de subida** | No aplica | Gratuito |
-| **Costo por tokens de entrada** | ~USD $0.003 por 1,000 tokens | ~USD $0.003 por 1,000 tokens |
-| **Costo adicional** | No aplica | USD $0.20 por 1,000 tokens recuperados |
-| **Ideal para** | Archivos pequeños o medianos (menos de 100,000 tokens) | Archivos grandes, múltiples documentos o necesidad de búsquedas automáticas |
-| **Complejidad** | Manual (copiar y pegar) | Automática (recuperación inteligente) |
-| **Límite práctico** | Hasta ~100,000 tokens (con GPT-4-turbo-128k) | Sin límite práctico; fragmenta y recupera según necesidad |
+El archivo PDF es el siguiente: [Ejemplo_100_tokens.pdf](ejemplo_100_tokens.pdf).
 
-## 3. Ejemplo práctico: Costos estimados para un PDF de 50 páginas
+### 1. Subir archivo a OpenAI
 
-| Concepto | Valor |
-|:---|:---|
-| **Tamaño estimado** | ~25,000 tokens |
-| **Costo utilizando copiar/pegar** | ~USD $0.075 |
-| **Costo utilizando File Search** | ~USD $5.075 |
-| **Diferencia** | File Search resulta aproximadamente 67 veces más costoso en este escenario |
+En este caso, el documento se cargó en la plataforma de OpenAI a través del dashboard (https://platform.openai.com/storage) pero también es posible subir documentos utilizando:
+- La API **/v1/files** (https://platform.openai.com/docs/api-reference/files)
 
-## 4. Recomendaciones de uso según el escenario
+![Alt text](image-1.png)
 
-| Escenario | Opción recomendada |
-|:---|:---|
-| Documento corto (1–20 páginas) | Copiar/pegar directamente en el prompt |
-| Documento medio (20–80 páginas) | Depende: copiar/pegar si entra en el contexto, fragmentar si excede |
-| Documento largo (100+ páginas o múltiples documentos) | Utilizar File Search |
-| Necesidad de búsquedas inteligentes o contenido desconocido | Utilizar File Search |
+Cuando se usa una herramienta como el file search de OpenAI se lleva a cabo un proceso de indexación que incluye la creación de un almacenamiento vectorial, este proceso consiste en dividir el contenido del archivo en fragmentos y convertir cada uno de ellos en una representación matemática llamada **vector de embedding**. Estos vectores permiten realizar búsquedas semánticas eficientes y precisas dentro del contenido del archivo.
 
-## 5. Notas adicionales
+La creación del almacenamiento vectorial es fundamental para que el modelo pueda interpretar el contenido del archivo de forma contextual. En lugar de procesar todo el documento de manera secuencial, el modelo utiliza estos vectores para identificar y recuperar las secciones más relevantes según la consulta realizada. Esto optimiza el rendimiento y mejora la calidad de las respuestas generadas.
 
-- La carga de archivos en File Search es gratuita.
-- Se incurre en costos únicamente al recuperar fragmentos durante una consulta.
-- Cuanto más general o amplia sea la consulta, mayor cantidad de tokens serán recuperados y, por tanto, mayor será el costo.
-- File Search ofrece mejores resultados cuando los documentos tienen una estructura clara y bien organizada.
+![Alt text](image-2.png)
 
-✅ **Resumen Final**  
-Para optimizar los costos en el uso de OpenAI Assistants:
-- Para documentos pequeños, se recomienda copiar/pegar el contenido directamente.
-- Para documentos grandes o múltiples archivos, File Search es conveniente solo si es necesario realizar búsquedas inteligentes.
+:::info
+El almacenamiento de vectores tiene un costo de $0.1 por cada GB de almacenamiento por dia.
+
+| Almacenamiento | Cálculo                  | Costo mensual |
+|---------------:|--------------------------|--------------:|
+| 1 GB           | 0,10 × 30 días × 1 GB    | $3,00         |
+| 50 GB          | 0,10 × 30 días × 50 GB   | $150,00       |
+| 100 GB         | 0,10 × 30 días × 100 GB  | $300,00       |
+
+:::
+
+### 2. LLamada a la Api con File Search
+
+![Alt text](image-3.png)
+
+| Ejecución | Tokens de entrada | Tokens de salida | Total de tokens |
+|--|--|--|--|
+| **1**     | 2.039             | 115              | **2.154**        |
+
+### 3. LLamada a la Api ingresando manualmente el texto del archivo
+
+![Alt text](image-4.png)
+
+| Ejecución | Tokens de entrada | Tokens de salida | Total de tokens |
+|--|--|--|--|
+| **1**     | 95             | 84              | **179**        |
+
+
+## Conclusiones
+
+**File Search** es ideal para consultas repetidas o documentos grandes, ya que:
+
+  * Solo cobra por los tokens de los chunks relevantes.
+  * Permite búsquedas semánticas avanzadas.
+  * **Sin embargo**, además del costo de almacenamiento del vector store, **se paga por el procesamiento** que incluye parseo, chunking y generación de embeddings, lo cual puede incrementar el costo total en comparación con la inyección manual de texto.
+
+**Inyección manual** funciona para documentos muy cortos o consultas puntuales, ya que:
+
+  * No requiere vector store ni indexación previa.
+  * Sólo se paga por los tokens del prompt y la respuesta.
+  * Evita cargos adicionales por procesamiento de archivos.
+
+**Recomendación:**
+
+* Si el documento es muy grande y requiere búsquedas avanzadas, usar File Search.
+* Si el documento es corto o la consulta es puntuante, usar la inyección manual.

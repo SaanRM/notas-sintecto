@@ -1,52 +1,158 @@
 ---
-title: Functions
+title: Functions (Funciones)
 ---
 
-# Functions (funciones)
+# Functions (Funciones)
 
-## 1. Tabla Comparativa: Uso normal vs. Uso de Functions
+Las **llamadas a funciones** permiten que el modelo devuelva, en lugar de un texto libre, un objeto JSON con los argumentos necesarios para invocar un procedimiento externo (por ejemplo, obtener el clima, realizar una suma, consultar una base de datos, etc.).
 
-| Aspecto | Sin Functions (prompt tradicional) | Con Functions (Assistant con funciones configuradas) |
-|:---|:---|:---|
-| **Modo de invocar APIs** | Manual: Incluir en el prompt instrucciones sobre llamadas API, interpretar texto de la respuesta manualmente | Automático: El modelo estructura la llamada, ejecuta la función y procesa su respuesta |
-| **Costo adicional** | Solo tokens del prompt y respuesta | Solo tokens del prompt, más los tokens generados por la definición y ejecución de functions |
-| **Complejidad** | Alta: requiere explicar la API al modelo | Baja: se define una vez la function, luego el modelo la usa automáticamente |
-| **Eficiencia** | Menor: propenso a errores de interpretación | Mayor: llamada precisa y estructurada |
-| **Ideal para** | Casos simples o donde no se pueda usar Assistants | Casos complejos o donde se requiere lógica integrada, workflows dinámicos |
-| **Precios de tokens** | Igual | Igual (el único impacto es la cantidad de tokens, no un costo fijo extra) |
 
----
 
-## 2. Costos detallados
+## Funcionamiento general
 
-- Tanto en prompts normales como usando Functions, el modelo cobra **por cantidad de tokens**, no por tipo de operación.
-- **Functions no tienen costo adicional por su uso**, solo:
-  - Tokens de definición de la función (normalmente pequeñas, unos 300–500 tokens).
-  - Tokens de la llamada a la función (input/output, típicamente 100–300 tokens extra).
-- **Ejemplo de impacto económico mínimo**:
-  - Llamada a Function + su respuesta puede costar entre **$0.0005 y $0.002 USD** por llamada.
+1. **Definición de la función**  
+   Cada función se describe con un objeto que incluye:  
+   - **name**: identificador único (sin espacios ni caracteres especiales).  
+   - **description**: breve explicación de su finalidad.  
+   - **parameters**: esquema JSON Schema que define:
+     - Tipos de datos (`string`, `number`, `boolean`, `object`, `array`).
+     - Restricciones (`enum`, `minimum`, `maxLength`, etc.).
+     - Campos obligatorios (`required`).
+     - Prohibición de propiedades adicionales (`additionalProperties: false`).
 
----
+2. **Detección automática**  
+   Cuando el modelo detecta en la conversación la intención adecuada, en lugar de responder con texto natural, devuelve un mensaje con la llamada a la función:
+   ```json
+   {
+     "name": "get_weather",
+     "arguments": {
+       "location": "Bogotá, Colombia",
+       "unit": "c"
+     }
+   }
+   ```
 
-## 3. ¿Dónde se pueden usar Functions?
+3. **Ejecución externa y retorno**  
+   - El backend recibe ese JSON, invoca realmente la función (p.ej. llama a una API de clima).  
+   - Luego envía de vuelta al modelo un mensaje con rol `function`, conteniendo el resultado:
+     ```json
+     {
+       "role": "function",
+       "name": "get_weather",
+       "content": "{ \"temp\": 18, \"condition\": \"nublado\" }"
+     }
+     ```
+   - El modelo integra ese contenido en la conversación y devuelve un mensaje de texto al usuario.
 
-| Aspecto | Detalle |
-|:---|:---|
-| **En Assistants (API de Assistants)** | ✅ Sí, Functions están totalmente soportadas. |
-| **En chat/completion API normal (sin Assistant)** | ⚠️ Parcial: solo algunos modelos permiten usar `function_calling` manualmente (por ejemplo, GPT-4-turbo vía `chat/completions`). |
-| **Desde OpenAI Playground** | ✅ Sí, si se habilita `Function Calling` en las opciones avanzadas. |
-| **Desde Dashboard en plataforma de Assistants** | ✅ Sí, mediante creación/configuración de Assistant. |
 
-**Importante:**  
-- Functions integradas de forma automática (sin necesidad de manejar `function_call` manualmente) **solo están completamente disponibles en la plataforma de Assistants**.
-- Usar `functions` directamente en `chat/completions` API requiere más trabajo: se debe interpretar manualmente el `function_call` retornado y ejecutar la llamada.
 
----
+## Ejemplo: función para sumar dos números
 
-## ✅ Resumen Final
+1. **Definición de la función**  
+   ```json
+   {
+     "name": "add_numbers",
+     "description": "Suma dos números y devuelve el resultado",
+     "parameters": {
+       "type": "object",
+       "properties": {
+         "a": {
+           "type": "number",
+           "description": "Primer sumando"
+         },
+         "b": {
+           "type": "number",
+           "description": "Segundo sumando"
+         }
+       },
+       "required": ["a", "b"],
+       "additionalProperties": false
+     }
+   }
+   ```
 
-> Usar **Functions** en Assistants de OpenAI no implica un costo directo adicional, sino únicamente un ligero incremento en tokens utilizados.  
->  
-> Functions permiten automatizar llamadas a APIs de manera estructurada, más segura y más eficiente que instructing al modelo vía texto plano.  
->  
-> Las Functions están diseñadas para ser usadas principalmente dentro de **Assistants**, pero también pueden ser utilizadas de manera manual en algunas APIs (chat/completions) que soporten `function_calling`.
+2. **Petición al modelo**  
+   ```json
+   {
+     "model": "gpt-3.5-turbo-0613",
+     "messages": [
+       { "role": "user", "content": "¿Cuánto es 4 más 7?" }
+     ],
+     "functions": [
+       /* definición de la función add_numbers aquí */
+     ],
+     "function_call": "auto"
+   }
+   ```
+
+3. **Respuesta del modelo (function_call)**  
+   ```json
+   {
+     "role": "assistant",
+     "content": null,
+     "function_call": {
+       "name": "add_numbers",
+       "arguments": "{\"a\":4,\"b\":7}"
+     }
+   }
+   ```
+:::note
+**Orquestación en el backend**  
+Tras la respuesta de la función, el backend debe:  
+- Comprobar si el mensaje del modelo incluye `function_call`.  
+- Extraer `name` y `arguments`, ejecutar internamente la lógica correspondiente (p. ej. `add_numbers`).  
+- Enviar una segunda petición al modelo, añadiendo al historial un mensaje de rol `function` con el resultado JSON.  
+- Recibir el texto final del modelo, que integra automáticamente el resultado de la función.
+:::
+
+4. **Ejecución en el backend**  
+   ```js
+   // Ejemplo en JavaScript
+   const args = JSON.parse(call.arguments);       // { a: 4, b: 7 }
+   const result = args.a + args.b;                // 11
+   ```
+
+5. **Reenvío al modelo**  
+   ```json
+   {
+     "role": "function",
+     "name": "add_numbers",
+     "content": "{\"result\":11}"
+   }
+   ```
+
+6. **Respuesta final del modelo**  
+   ```json
+   {
+     "role": "assistant",
+     "content": "El resultado de sumar 4 y 7 es 11."
+   }
+   ```
+
+## Ejemplos habituales de funciones
+
+- **get_news**: obtiene titulares y resúmenes de noticias.  
+- **translate_text**: traduce fragmentos de texto.  
+- **create_calendar_event**: añade eventos a un calendario.  
+- **query_database**: ejecuta consultas SQL.  
+- **process_payment**: inicia transacciones financieras.  
+- **generate_image**: coordina la generación de imágenes.  
+
+Cada una se define mediante su propio esquema para que el modelo entienda cuándo y cómo invocarla.
+
+
+
+## Flujo de interacción con la API
+
+1. Envío de la petición a `/v1/chat/completions`, incluyendo:
+   - Mensajes de usuario.
+   - Array de descripciones de funciones.
+   - `"function_call": "auto"`.
+2. Recepción de un mensaje con `"function_call"` (nombre + argumentos).
+3. Ejecución de la función en el sistema propio.
+4. Reenvío de la respuesta de la función como mensaje de rol `function`.
+5. Continuación de la conversación, integrando el resultado obtenido.
+
+
+
+Con este mecanismo, el modelo puede “enchufarse” a cualquier servicio externo definido como función, garantizando una comunicación estructurada y fácil de procesar.
