@@ -1,5 +1,5 @@
 ---
-title: /v1/assistants
+title: Assistants
 ---
 
 ## `/v1/assistants`

@@ -1,5 +1,5 @@
 ---
-title: /v1/chat/completions
+title: Completions
 ---
 
 > **Descripción**  
