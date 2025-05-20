@@ -81,6 +81,9 @@ const config: Config = {
     },
     mermaid: {
       theme: {light: 'neutral', dark: 'dark'},
+      options: {
+        hideEmptyMembersBox: true,   // oculta la caja vacía de miembros
+      },
     },
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
