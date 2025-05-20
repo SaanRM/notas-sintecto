@@ -32,6 +32,11 @@ const config: Config = {
     locales: ['en'],
   },
 
+  markdown: {
+    mermaid: true,
+  },
+  themes: ['@docusaurus/theme-mermaid'],
+
   presets: [
     [
       'classic',
@@ -73,6 +78,9 @@ const config: Config = {
     tableOfContents: {
       minHeadingLevel: 2,
       maxHeadingLevel: 2,
+    },
+    mermaid: {
+      theme: {light: 'neutral', dark: 'dark'},
     },
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
