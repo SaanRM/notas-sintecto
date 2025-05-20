@@ -7,6 +7,14 @@ sidebar_position: 1
 
 El **Corrector de texto** es una herramienta que permite identificar y sugerir correcciones ortográficas o de redacción en fragmentos de texto. Su diseño modular permite la integración con múltiples proveedores de inteligencia artificial, facilitando el mantenimiento y la extensión del sistema. La arquitectura del proyecto se divide en dos grandes componentes: el **backend**, responsable del procesamiento y la comunicación con los proveedores de IA, y el **frontend**, que gestiona la interfaz de usuario y la interacción con el sistema.
 
+## Visualización del corrector
+
+### Función de mejora/redacción de texto
+![Alt text](redacción.png)
+
+### Función de corrección ortográfica
+
+![Alt text](ortografia.png)
 
 ## Backend 
 
