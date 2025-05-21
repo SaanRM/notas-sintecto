@@ -100,9 +100,9 @@ classDiagram
 
     %% Ficheros estáticos manejados por Assets (descripciones)
     class Corrector.js {
-        Genera estructura html,
-        envía texto, recibe respuestas 
-        y gestiona botones
+        Lógica frontend: Genera estructura html,
+        envía texto, recibe respuestas y gestiona
+        botones
     }
     class DiffPatchMatch {
         Biblioteca para calcular diferencias 
@@ -159,17 +159,17 @@ classDiagram
     direction RL
 
     class Corrector.js {
-        Genera estructura html,
-        envía texto, recibe respuestas 
-        y gestiona botones
+        Lógica frontend: Genera estructura html,
+        envía texto, recibe respuestas y gestiona
+        botones
     }
 
     CorrectorController.php <--> Corrector.js
 
     class CorrectorController.php {
-        Define la lógica común para 
-        interactuar con modelos de IA y 
-        almacenar el uso en logs.
+        Lógica backend:  Maneja la corrección 
+        de texto y coordina el uso del proveedor 
+        de IA.
     }
 
 ```
