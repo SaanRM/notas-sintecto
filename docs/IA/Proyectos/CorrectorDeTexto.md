@@ -29,8 +29,9 @@ classDiagram
     %% Clase abstracta base
     class AbstractAiProvider.php {
         <<abstract>>
-        Define la lógica común para interactuar
-        con modelos de IA.
+        Define la lógica común para 
+        interactuar con modelos de IA y 
+        almacenar el uso en logs.
     }
     AbstractAiProvider.php <-- GoogleProvider.php : extiende
     AbstractAiProvider.php <-- OpenAiProvider.php : extiende
@@ -99,9 +100,9 @@ classDiagram
 
     %% Ficheros estáticos manejados por Assets (descripciones)
     class Corrector.js {
-        Lógica frontend: Genera estructura html,
-        envía texto, recibe respuestas y gestiona
-        botones
+        Genera estructura html,
+        envía texto, recibe respuestas 
+        y gestiona botones
     }
     class DiffPatchMatch {
         Biblioteca para calcular diferencias 
@@ -158,17 +159,17 @@ classDiagram
     direction RL
 
     class Corrector.js {
-        Lógica frontend: Genera estructura html,
-        envía texto, recibe respuestas y gestiona
-        botones
+        Genera estructura html,
+        envía texto, recibe respuestas 
+        y gestiona botones
     }
 
     CorrectorController.php <--> Corrector.js
 
     class CorrectorController.php {
-        Lógica backend:  Maneja la corrección 
-        de texto y coordina el uso del proveedor 
-        de IA.
+        Define la lógica común para 
+        interactuar con modelos de IA y 
+        almacenar el uso en logs.
     }
 
 ```
