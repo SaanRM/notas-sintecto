@@ -287,15 +287,3 @@ classDiagram
 
 
 ```
-
-## Optimización:
-
-Se hizo la misma prueba de rendimiento con y sin concurrencia basado en 80 errores en proveedores de IA hasta llegar al único proveedor de IA disponible.
-
-### Con concurrencia:
-
-![Alt text](image-1.png)
-
-### Sin concurrencia:
-
-![Alt text](image.png)
