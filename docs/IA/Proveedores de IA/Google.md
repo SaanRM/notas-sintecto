@@ -19,32 +19,32 @@ Los límites de frecuencia se miden en cuatro dimensiones:
 ### Tabla de precios por modelo en la capa gratuita
 
 ## Gemini 2.5
-| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) | 
-|--|--|--|--|--|
-| Versión preliminar de Gemini 2.5 Flash (05/20)    | gemini-2.5-flash-preview-04-17            | 10 | 500    | 15.000  | 
-| Versión preliminar de Gemini 2.5 Flash (04/17)    | gemini-2.5-flash-preview-05-20            | 10 | 500    | 15.000  | 
+| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) | Tokens por minuto (Imágenes y documentos) | 
+|--|--|--|--|--|--|
+| Versión preliminar de Gemini 2.5 Flash (05/20)    | gemini-2.5-flash-preview-04-17            | 10 | 500    | 15.000  | 250.000 |
+| Versión preliminar de Gemini 2.5 Flash (04/17)    | gemini-2.5-flash-preview-05-20            | '' '' | '' ''    | '' ''  | '' '' |
 
 ## Gemini 2.0
-| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) | 
-|--|--|--|--|--|
-| Gemini 2.0 Flash                                  | gemini-2.0-flash                           | 15 | 1.000  | 30.000  | 
-| Gemini 2.0 Flash-Lite                             | gemini-2.0-flash-lite                      | 30 | 1.500  | 45.000  | 
-| gemini-2.0-flash-preview-image-generation         | gemini-2.0-flash-preview-image-generation  | 10 | 1.500  | 45.000  | 
+| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) | Tokens por minuto (Imágenes y documentos) | 
+|--|--|--|--|--|--|
+| Gemini 2.0 Flash                                  | gemini-2.0-flash                           | 15 | 1.000  | 30.000  | 1.000.000 |
+| Gemini 2.0 Flash-Lite                             | gemini-2.0-flash-lite                      | 30 | 1.500  | 45.000  | 1.000.000 |
+| gemini-2.0-flash-preview-image-generation         | gemini-2.0-flash-preview-image-generation  | 10 | 1.500  | 45.000  | 200.000 |
 
 ## Gemini 1.5
-| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) |
-|--|--|--|--|--|
-| Gemini 1.5 Flash                                  | gemini-1.5-flash                           | 15 | 500    | 15.000  |
-| Gemini 1.5 Flash-8B                               | gemini-1.5-flash-8b                        | 15 | 500    | 15.000  |
+| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) | Tokens por minuto (Imágenes y documentos) | 
+|--|--|--|--|--|--|
+| Gemini 1.5 Flash                                  | gemini-1.5-flash                           | 15 | 500    | 15.000  | 250.000 |
+| Gemini 1.5 Flash-8B                               | gemini-1.5-flash-8b                        | 15 | 500    | 15.000  | 250.000 |
 
 ## Gemma
-| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) |
-|--|--|--|--|--|
-| Gemma 3 1B                                        | gemma-3-1b-it                              | 30 | 14.400 | 432.000 |
-| Gemma 3 4B                                       | gemma-3-4b-it                              | 30 | 14.400 | 432.000 |  
-| Gemma 3 12B                                       | gemma-3-12b-it                             | 30 | 14.400 | 432.000 |  
-| Gemma 3 27B                                       | gemma-3-27b-it                             | 30 | 14.400 | 432.000 |  
-| Gemma 3n E4B                                      | gemma-3n-e4b-it                            | 30 | '' '' | '' '' |  
+| Modelo                                            | Referencia | Solicitudes por minuto |  Solicitudes por dia | Solicitudes mensuales gratuitas (30 dias) |Tokens por minuto (Imágenes y documentos) | 
+|--|--|--|--|--|--|
+| Gemma 3 1B                                        | gemma-3-1b-it                              | 30 | 14.400 | 432.000 | 15.000 |
+| Gemma 3 4B                                        | gemma-3-4b-it                              | 30 | 14.400 | 432.000 | 15.000 | 
+| Gemma 3 12B                                       | gemma-3-12b-it                             | 30 | 14.400 | 432.000 | 15.000 |
+| Gemma 3 27B                                       | gemma-3-27b-it                             | 30 | 14.400 | 432.000 | 15.000 |
+| Gemma 3n E4B                                      | gemma-3n-e4b-it                            | 30 | '' '' | '' '' | '' '' |
 
 ### Uso real
 
