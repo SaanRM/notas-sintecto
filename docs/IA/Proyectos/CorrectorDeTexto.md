@@ -1,6 +1,5 @@
 ---
 title: Corrector de texto 
-sidebar_position: 1
 ---
 
 # Corrector de texto
@@ -18,36 +17,13 @@ El **Corrector de texto** es una herramienta que permite identificar y sugerir c
 
 ## Backend 
 
-El backend está construido con una estructura orientada a objetos que promueve la extensibilidad y la reutilización de código. A continuación, se explica la estructura basada en el siguiente diagrama:
+El backend usa toda la estructura de la conexión a los modelos de IA explicada anteriormente para usar los servicios de una manera sencilla.
 
 
 ```mermaid
 
 classDiagram
     direction TB
-
-    %% Clase abstracta base
-    class AbstractAiProvider.php {
-        <<abstract>>
-        Define la lógica común para 
-        interactuar con modelos de IA y 
-        almacenar el uso en logs.
-    }
-    AbstractAiProvider.php <-- GoogleProvider.php : extiende
-    AbstractAiProvider.php <-- OpenAiProvider.php : extiende
-
-    %% Proveedores concretos
-    class GoogleProvider.php {
-        Adapta la lógica base para 
-        usar la API de Google.
-    }
-    class OpenAiProvider.php {
-        Adapta la lógica base para 
-        usar la API de OpenAI.
-    }
-
-    GoogleProvider.php <-- AiProviderFactory.php : registra
-    OpenAiProvider.php <-- AiProviderFactory.php : registra
 
     %% Fábrica de proveedores
     class AiProviderFactory.php {
@@ -58,17 +34,14 @@ classDiagram
 
     %% Controller de corrección
     class CorrectorController.php {
-        Lógica backend:  Maneja la corrección 
-        de texto y coordina el uso del proveedor 
-        de IA.
+        Maneja la corrección 
+        de texto y coordina el uso del 
+        proveedor de IA.
     }
 
 ```
 
 ### Descripción técnica
-- **AbstractAiProvider.php**: Clase abstracta que define una interfaz común para todos los proveedores de IA. Permite estandarizar las operaciones independientemente del proveedor específico.
-
-- **GoogleProvider.php** y **OpenAiProvider.php**: Implementaciones concretas que adaptan la lógica para comunicarse con las APIs respectivas de Google y OpenAI.
 
 - **AiProviderFactory.php**: Implementa el patrón Factory. Esta clase es responsable de instanciar el proveedor correspondiente según una configuración o solicitud.
 
